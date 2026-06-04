@@ -1,11 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的DevOps实践</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>简单网页 · 清新示例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f8fafc 0%, #eef2f5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        /* 卡片容器 */
+        .card {
+            max-width: 650px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(0px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.02);
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 520px) {
+            .card {
+                padding: 1.75rem 1.5rem 2rem;
+                border-radius: 1.5rem;
+            }
+        }
+
+        /* 装饰小圆 */
+        .badge {
+            display: inline-block;
+            background: #e9eef3;
+            padding: 0.25rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1e2a3e;
+            letter-spacing: -0.2px;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ffffff80;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e293b, #2d3e5f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .sub {
+            color: #475569;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.8rem;
+            border-left: 3px solid #94a3b8;
+            padding-left: 1rem;
+            font-weight: 450;
+        }
+
+        .desc {
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* 互动区域 */
+        .interact-card {
+            background: #f1f5f9;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0 2rem;
+            transition: background 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .counter-area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .click-count {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: #ffffffcc;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            color: #0f172a;
+            font-feature-settings: "tnum";
+            letter-spacing: 0.5px;
+        }
+
+        button {
+            background: #1e293b;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.65rem 1.5rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffffff30;
+        }
+
+        button:hover {
+            background: #0f172a;
+            transform: scale(0.97);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .reset-btn {
+            background: #475569;
+        }
+
+        .reset-btn:hover {
+            background: #334155;
+        }
+
+        .message {
+            background: #ffffffdd;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            color: #0c4e6e;
+            font-weight: 500;
+            text-align: center;
+            backdrop-filter: blur(2px);
+            transition: all 0.2s;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0 0.5rem;
+        }
+
+        .feature-item {
+            background: #ffffffcc;
+            backdrop-filter: blur(2px);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c3e66;
+            border: 1px solid #cbd5e1;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 2rem;
+            color: #62748c;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+        }
+
+        a {
+            color: #3b5f8a;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello from Docker + GitHub Actions!</h1>
-    <p>部署时间：2026年1月4日</p>
-   <h1>It‘s new!</h1>
+<div class="card">
+    <div class="badge">✨ 极简示例 · 开箱即用</div>
+    <h1>🐱 Neko Cafe</h1>
+    <div class="sub">轻量 · 响应式 · 交互卡片</div>
+    <div class="desc">
+        这是一个简单的 HTML/CSS/JS 网页，展示现代前端的基本结构。
+        点击下方按钮可体验动态交互，所有样式均已适配手机和电脑。
+    </div>
+
+    <!-- 互动区域（js演示） -->
+    <div class="interact-card">
+        <div class="counter-area">
+            <span class="click-count" id="clickDisplay">0</span>
+            <div style="display: flex; gap: 12px;">
+                <button id="clickBtn">❤️ 点我 +1</button>
+                <button id="resetBtn" class="reset-btn">⟳ 重置</button>
+            </div>
+        </div>
+        <div id="feedbackMsg" class="message">
+            💡 点击按钮，体验交互反馈
+        </div>
+        <div class="feature-list">
+            <span class="feature-item">📱 响应式布局</span>
+            <span class="feature-item">🎨 柔和渐变</span>
+            <span class="feature-item">⚡ 即时反馈</span>
+            <span class="feature-item">🧩 友好语义</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 0.25rem;">
+        <p style="font-size: 0.85rem; color: #2c3e50; line-height: 1.5;">
+            💬 你可以在此基础上扩展组件、增加页面、或连接 API。
+            <br>🔧 所有代码均包含在一个文件中，便于部署和修改。
+        </p>
+    </div>
+
+    <footer>
+        🌟 简单网页 · 自由定制 | 
+        <a href="#" id="moreInfoLink">了解更多 →</a>
+    </footer>
+</div>
+
+<script>
+    (function(){
+        // 简单的计数器示例
+        let count = 0;
+        const clickDisplay = document.getElementById('clickDisplay');
+        const clickBtn = document.getElementById('clickBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const feedbackMsg = document.getElementById('feedbackMsg');
+
+        // 更新显示
+        function updateCounterUI() {
+            clickDisplay.textContent = count;
+        }
+
+        // 给出不同的反馈文字，更有趣
+        function setMessage(msg, isReset = false) {
+            if(isReset){
+                feedbackMsg.innerHTML = '🔄 计数器已归零，继续开始吧！';
+                setTimeout(() => {
+                    if(feedbackMsg.innerHTML === '🔄 计数器已归零，继续开始吧！'){
+                        feedbackMsg.innerHTML = '💡 点击按钮，体验交互反馈';
+                    }
+                }, 1800);
+            } else {
+                if(count === 1){
+                    feedbackMsg.innerHTML = '🎉 第一次点击！欢迎互动～';
+                } else if(count % 5 === 0 && count !== 0){
+                    feedbackMsg.innerHTML = `🏆 哇！已经点击 ${count} 次啦 ✨`;
+                } else {
+                    feedbackMsg.innerHTML = `👍 当前点击次数：${count}`;
+                }
+                // 自动恢复默认提示但保留3秒，不过不清除也可以，让用户感觉有动态
+                setTimeout(() => {
+                    if(feedbackMsg.innerHTML !== '🔄 计数器已归零，继续开始吧！' && feedbackMsg.innerHTML !== '💡 点击按钮，体验交互反馈'){
+                        // 如果5秒内没有再次点击，恢复简洁提示（可选）
+                        // 但为了体验，不强制覆盖，只是做个轻提示恢复
+                        if(count !== 0 && feedbackMsg.innerHTML.includes(`当前点击次数：${count}`)){
+                            // 保留最后一条互动痕迹，不再覆盖，更自然
+                        }
+                    }
+                }, 2000);
+            }
+        }
+
+        function increment() {
+            count++;
+            updateCounterUI();
+            setMessage('', false);
+        }
+
+        function resetCounter() {
+            count = 0;
+            updateCounterUI();
+            setMessage('', true);
+        }
+
+        clickBtn.addEventListener('click', increment);
+        resetBtn.addEventListener('click', resetCounter);
+
+        // 页脚链接示例（简单弹出提示）
+        const link = document.getElementById('moreInfoLink');
+        if(link){
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('✨ 这是一个纯前端演示页面。\n你可以修改内容、样式或加入更多功能。\n祝你编码愉快！');
+            });
+        }
+
+        // 额外的炫彩小彩蛋：控制台友好输出
+        console.log('✅ 简单网页已启动 | 计数器模块正常 | 设计优雅');
+    })();
+</script>
 </body>
 </html>
