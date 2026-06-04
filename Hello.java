@@ -1,3 +1,3 @@
 public void sayHello() {
-    System.out.println("你好");
+    System.out.println("呵呵呵");
 }
