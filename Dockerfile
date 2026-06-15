@@ -12,7 +12,7 @@ COPY backend/settings.xml /root/.m2/settings.xml
 RUN mvn dependency:go-offline -B || true
 
 COPY backend/src ./src
-RUN mvn clean package -DskipTests -B
+RUN mvn clean package -Dmaven.test.skip=true -B
 
 # ---- 阶段2: JRE 运行 ----
 FROM eclipse-temurin:17-jre-alpine
