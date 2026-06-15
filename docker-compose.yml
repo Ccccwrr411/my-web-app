@@ -1,5 +1,44 @@
+# ============================================
+# NekoCafé docker-compose.yml
+# 只启动后端服务，数据库/Redis 使用已有容器
+# 用法: docker compose up -d --build
+# ============================================
+
 services:
-  web:
-    build: .
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nekocafe-backend
+    restart: unless-stopped
+    environment:
+      # --- 数据库连接（改成你已有数据库的地址）---
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST:-host.docker.internal}:${DB_PORT:-5432}/${DB_NAME:-nekocafe}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-admin_user}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-123456789}
+
+      # --- Redis 连接 ---
+      SPRING_DATA_REDIS_HOST: ${REDIS_HOST:-host.docker.internal}
+      SPRING_DATA_REDIS_PORT: ${REDIS_PORT:-6379}
+      SPRING_DATA_REDIS_PASSWORD: ${REDIS_PASSWORD:-123456789}
+
+      # --- 服务端口 ---
+      SERVER_PORT: 8081
+
+      # --- JWT ---
+      JWT_SECRET: ${JWT_SECRET:-nekocafe-local-dev-secret}
+
+      # --- 微信小程序 ---
+      WX_APPID: ${WX_APPID:-YOUR_APPID_HERE}
+      WX_SECRET: ${WX_SECRET:-YOUR_SECRET_HERE}
     ports:
-      - "8080:80"
+      - "8081:8081"
+    volumes:
+      - backend_uploads:/app/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # 允许容器访问宿主机网络
+
+volumes:
+  backend_uploads:
+    driver: local
